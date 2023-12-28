@@ -63,11 +63,12 @@ const addtoCart = async (req, res) => {
       cart = new Cart({ userId, products: [] });
     }
 
-    const isProductExist = cart.products.find(
-      (product) => product._id === product_id
+    const isProductExist = cart.products.findIndex(
+      (product) => product._id == product_id
     );
+    console.log(product_id, isProductExist);
 
-    if (isProductExist) {
+    if (isProductExist > -1) {
       return res.status(200).send({
         success: true,
         message: "Product already exist",
