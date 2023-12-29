@@ -4,11 +4,18 @@ const cors = require("cors");
 const router = require("./router/index.js");
 const connectDb = require("./utils/db.js");
 const colors = require("colors");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
+const CLIENT_ORIGIN =
+  process.env.NODE_ENV === "DEV"
+    ? "http://localhost:3000"
+    : "https://next-js-testing-azure.vercel.app";
+
+app.use(cors({ credentials: true, origin: CLIENT_ORIGIN }));
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser());
 
 app.use("/api/v1", router);
 
@@ -22,5 +29,3 @@ connectDb().then(() => {
     console.log(`server is running at port: ${PORT}`.bgBlue);
   });
 });
-
-module.exports = app;

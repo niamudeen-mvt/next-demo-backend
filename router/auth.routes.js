@@ -7,11 +7,12 @@ const {
   validateLoginSchema,
 } = require("../middleware/validtion.middleware");
 
+userRouter.route("/refresh-token").get(authControllers.refreshToken);
 userRouter
   .route("/register")
   .post(validateRegisterSchema, authControllers.register);
 userRouter.route("/login").post(validateLoginSchema, authControllers.login);
-userRouter.route("/refresh-token").post(authControllers.refreshToken);
 userRouter.route("/user").get(verifyToken, authControllers.userDetails);
+userRouter.route("/logout").delete(authControllers.logout);
 
 module.exports = userRouter;
