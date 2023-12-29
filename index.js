@@ -12,6 +12,7 @@ const app = express();
 const CLIENT_ORIGIN = "https://next-js-testing-azure.vercel.app";
 
 app.use(cors({ credentials: true, origin: CLIENT_ORIGIN }));
+// app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 

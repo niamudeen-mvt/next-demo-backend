@@ -1,11 +1,13 @@
 const Cart = require("../models/cart.model");
-const Product = require("../models/product.model");
 
 const getCartProducts = async (req, res) => {
   try {
     const userId = req.params.id;
     // Find the user's cart or create a new one if it doesn't exist
-    const cartProducts = await Cart.findOne({ userId });
+    const cartProducts = await Cart.findOne({ userId }).populate({
+      path: "products",
+      mode: "Product",
+    });
 
     if (cartProducts) {
       res.status(200).send({
@@ -36,18 +38,14 @@ const addtoCart = async (req, res) => {
       cart = new Cart({ userId, products: [] });
     }
 
-    const isProductExist = cart.products.findIndex(
-      (product) => product._id == product_id
-    );
-
-    if (isProductExist > -1) {
+    const isProductExist = cart.products.includes(product_id);
+    if (isProductExist) {
       return res.status(200).send({
         success: true,
         message: "Product already exist",
       });
     } else {
-      const product = await Product.findOne({ _id: product_id });
-      cart.products = [...cart.products, product];
+      cart.products = [...cart.products, product_id];
       await cart.save();
       res.status(201).send({
         success: true,

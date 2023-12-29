@@ -7,18 +7,11 @@ const cartSchema = new mongoose.Schema({
   },
   products: [
     {
-      product_id: String,
-      title: String,
-      description: String,
-      thumbnail: String,
-      category: String,
-      price: Number,
-      rating: String,
-      category: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
     },
   ],
 });
 
-// define the model and collection name
 const Cart = new mongoose.model("Cart", cartSchema);
 module.exports = Cart;
