@@ -8,10 +8,8 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 
-const CLIENT_ORIGIN =
-  process.env.NODE_ENV === "DEV"
-    ? "http://localhost:3000"
-    : "https://next-js-testing-azure.vercel.app";
+// const CLIENT_ORIGIN = "http://localhost:3000";
+const CLIENT_ORIGIN = "https://next-js-testing-azure.vercel.app";
 
 app.use(cors({ credentials: true, origin: CLIENT_ORIGIN }));
 app.use(express.json());
