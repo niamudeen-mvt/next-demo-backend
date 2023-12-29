@@ -1,36 +1,9 @@
 const Cart = require("../models/cart.model");
 const Product = require("../models/product.model");
 
-// *=================================================
-//* CART DETAILS BY ID LOGIC
-// *================================================
-
-const cartDetails = async (req, res) => {
-  try {
-    const userId = req.params.id;
-    // Find the user's cart or create a new one if it doesn't exist
-    let userCart = await Cart.findOne({ userId });
-
-    if (userCart) {
-      res.status(200).send({
-        success: true,
-        cart: userCart.cart,
-        message: "Cart found successfully",
-      });
-    } else {
-      res.status(200).send({
-        success: false,
-        message: "no cart data found",
-      });
-    }
-  } catch (error) {
-    res.status(500).send({ message: error });
-  }
-};
-
 const getCartProducts = async (req, res) => {
   try {
-    const { userId } = req.user;
+    const userId = req.params.id;
     // Find the user's cart or create a new one if it doesn't exist
     const cartProducts = await Cart.findOne({ userId });
 
@@ -66,7 +39,6 @@ const addtoCart = async (req, res) => {
     const isProductExist = cart.products.findIndex(
       (product) => product._id == product_id
     );
-    console.log(product_id, isProductExist);
 
     if (isProductExist > -1) {
       return res.status(200).send({
@@ -122,4 +94,4 @@ const removeFromCart = async (req, res) => {
   }
 };
 
-module.exports = { addtoCart, cartDetails, removeFromCart, getCartProducts };
+module.exports = { addtoCart, removeFromCart, getCartProducts };
