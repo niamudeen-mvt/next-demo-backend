@@ -13,7 +13,7 @@ app.use(cors());
 app.use("/api/v1", router);
 
 app.get("/", (req, res) => {
-  res.send("ecommerce backend is working");
+  res.send("next demo backend is working");
 });
 
 const PORT = 7000;
